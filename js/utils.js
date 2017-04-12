@@ -84,6 +84,36 @@ function uniquify(list) {
   return result
 }
 
+
+// 'http://www.a.com', { haha: 123, xixi: 233 }) => 'http://www.a.com?haha=123&xixi=233'
+// 'http://www.a.com?wowo=233', { haha: 123, xixi: 233 }) => 'http://www.a.com?haha=123&xixi=233&wowo=233'
+function setQuery (url, data = {}) {
+  const { data: originData, host } = parseQuery(url)
+  const query = serialize(Object.assign({}, originData, data))
+  return `${host}?${query}`
+}
+
+// { haha: 123, xixi: 233 } => haha=123&xixi=233
+function serialize (data) {
+  const keys = Object.keys(data)
+  if (keys.length === 0) return ''
+  return keys.map(key => `${key}=${data[key]}`).join('&')
+}
+
+// http://www.a.com?haha=123&xixi=233 => { host: 'http://www.a.com', data: { haha: 123, xixi: 233 } }
+function parseQuery (url) {
+  const signPosition = url.indexOf('?')
+  if (signPosition === -1) {
+    return { host: url, data: {} }
+  } else {
+    const host = url.substr(0, signPosition)
+    const query = url.substr(signPosition + 1)
+    const data = JSON.parse(`{"${query.replace(/&/g, '","').replace(/=/g, '":"')}"}`)
+    return { host, data }
+  }
+}
+
+
 module.exports = {
   isObject: p => Object.prototype.toString.call(p) === "[object Object]",
   isArray: p => Object.prototype.toString.call(p) === "[object Array]",
@@ -95,4 +125,7 @@ module.exports = {
   isJSON,
   addUniqueArray,
   uniquify,
+  setQuery,
+  serialize,
+  parseQuery,
 }
