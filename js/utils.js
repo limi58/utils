@@ -19,10 +19,13 @@ function omit(obj, key) {
 }
 
 // min <= x < max
+// random(0, 10) => 4
 function random(min, max) {
   return Math.floor(Math.random() * (max - min) + min)
 }
 
+// leftPad(1, 2, '0') => "01"
+// leftPad(17, 5, 0) => "00017"
 function leftPad(str, length, fill) {
   const cache = ['',' ','  ','   ','    ','     ','      ','       ','        ','         ']
   str = String(str)
@@ -41,6 +44,7 @@ function leftPad(str, length, fill) {
   return pad + str
 }
 
+// randomArr([1,2,3,4]) => [3,1,2,4]
 function randomArr(arr) {
   arr = arr.slice()
   let retArr = []
@@ -56,21 +60,13 @@ function randomArr(arr) {
   return retArr
 }
 
+// addUniqueArray([1,2,3], 3) => [1,2,3]
 function addUniqueArray(originArray, ele) {
   if (originArray.indexOf(ele) > -1) {
     return originArray
   } else {
     return originArray.concat(ele)
   }
-}
-
-function isJSON(str) {
-  try {
-    JSON.parse(str)
-  } catch (e) {
-    return false
-  }
-  return true
 }
 
 // [1, 2, 3, 3, 3] => [1, 2, 3]
@@ -83,7 +79,6 @@ function uniquify(list) {
   })
   return result
 }
-
 
 // 'http://www.a.com', { haha: 123, xixi: 233 }) => 'http://www.a.com?haha=123&xixi=233'
 // 'http://www.a.com?wowo=233', { haha: 123, xixi: 233 }) => 'http://www.a.com?haha=123&xixi=233&wowo=233'
@@ -113,6 +108,14 @@ function parseQuery (url) {
   }
 }
 
+function isJSON(str) {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return true
+}
 
 module.exports = {
   isObject: p => Object.prototype.toString.call(p) === "[object Object]",
