@@ -13,7 +13,7 @@ function getHeaders () {
 function _fetch (method, url, data = {}, opts = {}) {
   return new Promise((resolve, reject) => {
     let fetchRes
-    if (method === 'GET') {
+    if (method === 'GET' || method === 'DELETE') {
       fetchRes = fetch(url, {
         method,
         headers: getHeaders(),
@@ -35,7 +35,7 @@ function _fetch (method, url, data = {}, opts = {}) {
         alert('请重新登录')
         // location.assign('/oauth/to-auth')
       } else {
-        res.json().then(err => reject(err.error))
+        res.json().then(err => reject(err))
       }
     })
   })
