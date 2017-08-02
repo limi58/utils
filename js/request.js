@@ -30,7 +30,7 @@ function _fetch (method, url, data = {}, opts = {}) {
     }
     fetchRes.then(res => {
       if (res.status >= 200 && res.status < 300) {
-        resolve(res.json())
+        res.json().then(res => resolve(res))
       } else if (res.status === 401) {
         alert('请重新登录')
         // location.assign('/oauth/to-auth')
